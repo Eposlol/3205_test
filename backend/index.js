@@ -11,18 +11,18 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true })) 
 
 const searchData = function({email, phone} = d) {
-    return  this.filter(el => el.email === email && parseInt(phone) === el.number || el.email === email && phone === ''); 
+    return this.filter(el => el.email === email && parseInt(phone) === el.number || el.email === email && phone === ''); 
 }
 
 let timeout;
+let ms = 5000;
 
 app.post("/getData", upload.array(), (req, res) => {
-
-   const filterItem = req.body
-   const searchResult = searchData.call(data, filterItem)
-
-    clearTimeout(timeout)
-    timeout = setTimeout(()=> {res.send(JSON.stringify(searchResult))}, 1000) 
+    clearTimeout(timeout);
+    timeout = setTimeout(()=> {
+        const searchResult = searchData.call(data, req.body)
+        res.send(JSON.stringify(searchResult));
+    }, ms);
 });
 
-app.listen(5000, ()=> console.log('back is running'))
+app.listen(3205, ()=> console.log('back is running'))
